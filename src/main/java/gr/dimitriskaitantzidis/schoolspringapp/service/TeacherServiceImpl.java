@@ -1,16 +1,18 @@
-package gr.dimitriskaitantzidis.teachersspringapp.service;
+package gr.dimitriskaitantzidis.schoolspringapp.service;
 
 
 
-import gr.dimitriskaitantzidis.teachersspringapp.dao.ITeacherDAO;
-import gr.dimitriskaitantzidis.teachersspringapp.dto.TeacherDTO;
-import gr.dimitriskaitantzidis.teachersspringapp.model.Teacher;
-import gr.dimitriskaitantzidis.teachersspringapp.service.exceptions.TeacherIdAlreadyExistsException;
-import gr.dimitriskaitantzidis.teachersspringapp.service.exceptions.TeacherNotFoundException;
+import gr.dimitriskaitantzidis.schoolspringapp.dao.ITeacherDAO;
+import gr.dimitriskaitantzidis.schoolspringapp.dto.TeacherDTO;
+import gr.dimitriskaitantzidis.schoolspringapp.model.Teacher;
+import gr.dimitriskaitantzidis.schoolspringapp.service.exceptions.TeacherIdAlreadyExistsException;
+import gr.dimitriskaitantzidis.schoolspringapp.service.exceptions.TeacherNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
 
+@Service
 public class TeacherServiceImpl implements ITeacherService {
 	
 	private final ITeacherDAO teacherDAO;
@@ -60,6 +62,11 @@ public class TeacherServiceImpl implements ITeacherService {
 			throw new TeacherNotFoundException(teacherToUpdate);
 		teacherDAO.update(teacherToUpdate, newTeacher);
 		
+	}
+
+	@Override
+	public List<Teacher> getAllTeachersOrderByLnameFname() throws SQLException {
+		return this.teacherDAO.getAllTeachersOrderByLnameFname();
 	}
 
 	@Override

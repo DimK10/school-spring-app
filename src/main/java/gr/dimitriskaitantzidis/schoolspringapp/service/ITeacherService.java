@@ -1,11 +1,12 @@
-package gr.dimitriskaitantzidis.teachersspringapp.service;
+package gr.dimitriskaitantzidis.schoolspringapp.service;
 
 
 
-import gr.dimitriskaitantzidis.teachersspringapp.dto.TeacherDTO;
-import gr.dimitriskaitantzidis.teachersspringapp.model.Teacher;
-import gr.dimitriskaitantzidis.teachersspringapp.service.exceptions.TeacherIdAlreadyExistsException;
-import gr.dimitriskaitantzidis.teachersspringapp.service.exceptions.TeacherNotFoundException;
+import gr.dimitriskaitantzidis.schoolspringapp.dto.TeacherDTO;
+import gr.dimitriskaitantzidis.schoolspringapp.model.Teacher;
+import gr.dimitriskaitantzidis.schoolspringapp.service.exceptions.TeacherIdAlreadyExistsException;
+import gr.dimitriskaitantzidis.schoolspringapp.service.exceptions.TeacherNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -67,7 +68,15 @@ public interface ITeacherService {
 	 */
 	void updateTeacher(TeacherDTO oldTeacherDTO, TeacherDTO newTeacherDTO) 
 			throws TeacherNotFoundException, SQLException;
-	
+
+	/**
+	 * Retrieves all {@link Teacher} objects into a list
+	 * @return
+	 * @throws SQLException
+	 * 			if any error happens between the driver
+	 * 			and the server.
+	 */
+	List<Teacher> getAllTeachersOrderByLnameFname() throws SQLException;
 	
 	
 	/**

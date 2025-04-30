@@ -1,4 +1,4 @@
-package gr.dimitriskaitantzidis.teachersspringapp.dto;
+package gr.dimitriskaitantzidis.schoolspringapp.dto;
 
 public class TeacherDTO {
 	private int id;

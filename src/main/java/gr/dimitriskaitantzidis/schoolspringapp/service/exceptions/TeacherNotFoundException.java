@@ -1,7 +1,7 @@
-package gr.dimitriskaitantzidis.teachersspringapp.service.exceptions;
+package gr.dimitriskaitantzidis.schoolspringapp.service.exceptions;
 
 
-import gr.dimitriskaitantzidis.teachersspringapp.model.Teacher;
+import gr.dimitriskaitantzidis.schoolspringapp.model.Teacher;
 
 public class TeacherNotFoundException extends Exception {
 	

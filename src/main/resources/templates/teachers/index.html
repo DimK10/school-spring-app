@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org/">
+<head>
+   <meta charset="UTF-8" />
+   <title>Title</title>
+   <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.css}"/>
+</head>
+<body>
+<h1 th:text="'List of Teachers'">Teachers List</h1>
+
+<table class="table table-striped">
+   <thead>
+   <tr>
+      <th style="width: 150px;">Id</th>
+      <th style="width: 150px;">First Name</th>
+      <th style="width: 150px;">Last Name</th>
+   </tr>
+   </thead>
+   <tbody>
+   <tr th:each="teacher : ${teachers}">
+      <td th:text="${teacher?.id}">1</td>
+      <td th:text="${teacher?.fname}">Joe</td>
+      <td th:text="${teacher?.sname}">Buck</td>
+   </tr>
+   </tbody>
+</table>
+</body>
+<script type="text/javascript" th:src="@{/js/bootstrap/boostrap.js}"></script>
+</html>

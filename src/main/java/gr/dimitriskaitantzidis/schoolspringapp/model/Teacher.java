@@ -1,13 +1,26 @@
-package gr.dimitriskaitantzidis.teachersspringapp.model;
+package gr.dimitriskaitantzidis.schoolspringapp.model;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 /**
  * Teacher POJO class. 
  *
  *
  */
+@Entity
+@Table(name = "teachers")
 public class Teacher {
+	@Id
+	@Column(name = "T_id")
 	private int id;
+
+	@Column(name = "Firstname")
 	private String fname;
+
+	@Column(name = "Surname")
 	private String sname;
 	
 	public Teacher() {}

@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>gr.dimitriskaitantzidis</groupId>
-    <artifactId>teachers-spring-app</artifactId>
+    <artifactId>school-spring-app</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>teachers-spring-app</name>
-    <description>teachers-spring-app</description>
+    <name>school-spring-app</name>
+    <description>school-spring-app</description>
     <url/>
     <licenses>
         <license/>
@@ -34,10 +34,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-security</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>

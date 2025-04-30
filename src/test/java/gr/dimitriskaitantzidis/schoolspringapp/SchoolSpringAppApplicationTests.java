@@ -1,10 +1,10 @@
-package gr.dimitriskaitantzidis.teachersspringapp;
+package gr.dimitriskaitantzidis.schoolspringapp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TeachersSpringAppApplicationTests {
+class SchoolSpringAppApplicationTests {
 
     @Test
     void contextLoads() {

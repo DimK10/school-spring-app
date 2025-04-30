@@ -1,4 +1,4 @@
-package gr.dimitriskaitantzidis.teachersspringapp.dao.dbutil;
+package gr.dimitriskaitantzidis.schoolspringapp.dao.dbutil;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

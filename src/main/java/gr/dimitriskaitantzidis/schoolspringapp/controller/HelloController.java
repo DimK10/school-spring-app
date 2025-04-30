@@ -1,4 +1,4 @@
-package gr.dimitriskaitantzidis.teachersspringapp.controller;
+package gr.dimitriskaitantzidis.schoolspringapp.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
