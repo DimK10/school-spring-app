@@ -1,24 +1,17 @@
 package gr.dimitriskaitantzidis.schoolspringapp.model;
 
+import gr.dimitriskaitantzidis.schoolspringapp.enums.Role;
 import jakarta.persistence.*;
 
 @Table(name = "users")
 @Entity
 public class Users {
 
-    public enum Role {
-        ROLE_ADMIN("ROLE_ADMIN"), ROLE_TEACHER("ROLE_TEACHER"), ROLE_STUDENT("ROLE_STUDENT");
 
-        public final String value;
-
-        Role(String value) {
-            this.value = value;
-        }
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @Column(name = "user_name", unique = true, nullable = false)
     @Basic(optional = false)
@@ -33,11 +26,11 @@ public class Users {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

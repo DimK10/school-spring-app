@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org/">
+<head>
+   <meta charset="UTF-8" />
+   <title>Title</title>
+   <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.css}"/>
+</head>
+<body>
+<form th:action="@{/login}" method="post">
+   <input type="text" name="email"/>
+   <input type="password" name="password"/>
+   <button type="submit">Login</button>
+</form>
+</body>
+<script type="text/javascript" th:src="@{/js/bootstrap/boostrap.js}"></script>
+</html>
