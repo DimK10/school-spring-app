@@ -42,13 +42,13 @@ public class SecurityConfiguration {
         JdbcUserDetailsManager manager = new JdbcUserDetailsManager(dataSource);
 
         manager.setUsersByUsernameQuery("""
-                    SELECT email AS username, password, true AS enabled
+                    SELECT email, password, true AS enabled
                     FROM users
                     WHERE email = ?
                 """);
 
         manager.setAuthoritiesByUsernameQuery("""
-                    SELECT email AS username, role AS authority
+                    SELECT email, role AS authority
                     FROM users
                     WHERE email = ?
                 """);

@@ -1,15 +1,25 @@
 package gr.dimitriskaitantzidis.schoolspringapp.bean;
 
+import gr.dimitriskaitantzidis.schoolspringapp.dao.IUserDAO;
+import gr.dimitriskaitantzidis.schoolspringapp.model.User;
 import jakarta.annotation.PostConstruct;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
+import java.util.Optional;
+
 @Component
 @SessionScope
 public class SessionUser {
 
+    private final IUserDAO userDAO;
+
     private String email;
+
+    public SessionUser(IUserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
 
     @PostConstruct
     public void init() {
@@ -20,6 +30,12 @@ public class SessionUser {
     }
 
     public Integer getUserId() {
-        return null;
+
+        Optional<User> userOptional = userDAO.getUserByEmail(email);
+
+        if (userOptional.isEmpty()) {
+            // todo
+        }
+        return userOptional.get().getId();
     }
 }

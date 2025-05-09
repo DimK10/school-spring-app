@@ -1,10 +1,10 @@
 LOCK
     TABLES `teachers` WRITE;
 INSERT INTO `teachers`
-VALUES (1000, 'Fotios', 'Panagiotidis'),
-       (1001, 'Dimitrios', 'Dimitriou'),
-       (1002, 'Sofia', 'Karamani'),
-       (1003, 'Eleutheria', 'Petrou');
+VALUES (1000, 'Fotios', 'Panagiotidis', '1');
+#        (1001, 'Dimitrios', 'Dimitriou'),
+#        (1002, 'Sofia', 'Karamani'),
+#        (1003, 'Eleutheria', 'Petrou');
 UNLOCK
     TABLES;
 

@@ -11,4 +11,8 @@ public class TeacherNotFoundException extends Exception {
 		super("Teacher with id = " + teacher.getId() + " does no exist");
 	}
 
+	public TeacherNotFoundException(String message) {
+		super(message);
+	}
+
 }

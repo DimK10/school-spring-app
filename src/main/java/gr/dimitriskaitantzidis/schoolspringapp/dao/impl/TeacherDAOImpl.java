@@ -1,5 +1,7 @@
-package gr.dimitriskaitantzidis.schoolspringapp.dao;
+package gr.dimitriskaitantzidis.schoolspringapp.dao.impl;
 
+import gr.dimitriskaitantzidis.schoolspringapp.dao.GenericDAO;
+import gr.dimitriskaitantzidis.schoolspringapp.dao.ITeacherDAO;
 import gr.dimitriskaitantzidis.schoolspringapp.model.Course;
 import gr.dimitriskaitantzidis.schoolspringapp.model.Teacher;
 import gr.dimitriskaitantzidis.schoolspringapp.util.BasicValidator;
@@ -7,25 +9,28 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import org.springframework.javapoet.ClassName;
+import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@Repository
 public class TeacherDAOImpl extends GenericDAO<Teacher, Integer> implements ITeacherDAO {
 
     private static final Logger LOGGER = Logger.getLogger(ClassName.class.getName());
 
     private final EntityManager em;
 
-    public TeacherDAOImpl(Class<Teacher> entityType) {
-        super(entityType);
+    public TeacherDAOImpl() {
+        super(Teacher.class);
         this.em = super.getEntityManager();
     }
 
-    public Teacher getTeacherById(int id) throws SQLException {
+    public Optional<Teacher> getTeacherById(int id) throws SQLException {
         try {
             return findById(id);
         } catch (Exception ex) {

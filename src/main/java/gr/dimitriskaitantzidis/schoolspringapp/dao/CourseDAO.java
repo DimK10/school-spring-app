@@ -3,6 +3,7 @@ package gr.dimitriskaitantzidis.schoolspringapp.dao;
 import gr.dimitriskaitantzidis.schoolspringapp.model.Course;
 
 import java.util.List;
+import java.util.Optional;
 
 public class CourseDAO extends GenericDAO<Course, Integer> {
 
@@ -16,7 +17,7 @@ public class CourseDAO extends GenericDAO<Course, Integer> {
     }
 
     @Override
-    public Course findById(Integer integer) {
+    public Optional<Course> findById(Integer integer) {
         return super.findById(integer);
     }
 

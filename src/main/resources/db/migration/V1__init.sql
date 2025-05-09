@@ -8,6 +8,8 @@ CREATE TABLE `teachers`
     `id` int NOT NULL,
     `Firstname` varchar(45) NOT NULL,
     `Surname`   varchar(45) NOT NULL,
+    `U_id` INT NOT NULL,
+
     PRIMARY KEY (`id`)
 );
 
