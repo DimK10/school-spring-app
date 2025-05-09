@@ -15,14 +15,14 @@ import org.springframework.security.web.SecurityFilterChain;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableWebSecurity // Enable Web Security Support (via HttpSecurity)
+@EnableWebSecurity
 public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/css/**", "/js/**", "/images/**", "/login", "/error").permitAll()
+                        .requestMatchers("/css/**", "/js/**", "/images/**", "/icons/**", "/img/**", "/login", "/error").permitAll()
                         .requestMatchers("/teacher/**").hasRole("TEACHER")
                         .requestMatchers("/student/**").hasAuthority("STUDENT")
                         .anyRequest().authenticated()
