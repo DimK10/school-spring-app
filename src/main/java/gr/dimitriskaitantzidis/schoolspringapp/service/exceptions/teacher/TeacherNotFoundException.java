@@ -1,4 +1,4 @@
-package gr.dimitriskaitantzidis.schoolspringapp.service.exceptions;
+package gr.dimitriskaitantzidis.schoolspringapp.service.exceptions.teacher;
 
 
 import gr.dimitriskaitantzidis.schoolspringapp.model.Teacher;

@@ -1,10 +1,12 @@
 package gr.dimitriskaitantzidis.schoolspringapp.dao;
 
-
+import gr.dimitriskaitantzidis.schoolspringapp.model.Course;
 import gr.dimitriskaitantzidis.schoolspringapp.model.Teacher;
-import gr.dimitriskaitantzidis.schoolspringapp.repository.TeacherRepository;
+import gr.dimitriskaitantzidis.schoolspringapp.util.BasicValidator;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
+import jakarta.transaction.Transactional;
 import org.springframework.javapoet.ClassName;
-import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,55 +14,42 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@Service
-public class TeacherDAOImpl implements ITeacherDAO {
+public class TeacherDAOImpl extends GenericDAO<Teacher, Integer> implements ITeacherDAO {
 
     private static final Logger LOGGER = Logger.getLogger(ClassName.class.getName());
-    private final TeacherRepository teacherRepository;
 
+    private final EntityManager em;
 
-    public TeacherDAOImpl(TeacherRepository teacherRepository) {
-        super();
-        this.teacherRepository = teacherRepository;
+    public TeacherDAOImpl(Class<Teacher> entityType) {
+        super(entityType);
+        this.em = super.getEntityManager();
     }
 
-    @Override
-    public void insert(Teacher teacher) throws SQLException {
-        // todo
-    }
-
-    @Override
-    public void delete(Teacher teacher) throws SQLException {
-        // todo
-    }
-
-    @Override
-    public void update(Teacher oldTeacher, Teacher newTeacher) throws SQLException {
-        // todo
-    }
-
-    @Override
-    public List<Teacher> getAllTeachersOrderByLnameFname() throws SQLException {
+    public Teacher getTeacherById(int id) throws SQLException {
         try {
-            return this.teacherRepository.findAllByOrderBySnameAscFnameAsc();
+            return findById(id);
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "There was a problem retrieving the data in getAllTeachers. Exception is: ", ex);
             throw new SQLException(ex.getMessage());
         }
-
     }
 
-    @Override
-    public List<Teacher> getTeachersBySurname(String surname) throws SQLException {
-        // todo
-        return null;
-    }
+    @Transactional
+    public List<Course> getAssociatedCourses(Teacher teacher) throws NullPointerException, SQLException {
+        try {
 
-    @Override
-    public Teacher getTeacherById(int id) throws SQLException {
-        //todo
-        return null;
+            BasicValidator.checkNull(teacher);
+
+            Query query = em.createNamedQuery("Teacher.findAllRelatedCourses", Course.class)
+                    .setParameter("teacherId", teacher.getId());
+
+            return new ArrayList<Course>(query.getResultList());
+        } catch (NullPointerException npe) {
+            LOGGER.log(Level.SEVERE, npe.getMessage());
+            throw npe;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "There was a problem retrieving the data in getAllTeachers. Exception is: ", ex);
+            throw new SQLException(ex.getMessage());
+        }
     }
 }
-
-

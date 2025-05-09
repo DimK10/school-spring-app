@@ -5,13 +5,7 @@ import jakarta.persistence.*;
 
 @Table(name = "users")
 @Entity
-public class Users {
-
-
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class Users extends BaseEntity {
 
     @Column(name = "user_name", unique = true, nullable = false)
     @Basic(optional = false)
@@ -25,14 +19,6 @@ public class Users {
     @Basic(optional = false)
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getUserName() {
         return userName;

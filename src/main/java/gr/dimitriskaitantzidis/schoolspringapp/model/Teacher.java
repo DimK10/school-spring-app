@@ -1,9 +1,8 @@
 package gr.dimitriskaitantzidis.schoolspringapp.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 /**
  * Teacher POJO class. 
@@ -12,17 +11,30 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "teachers")
-public class Teacher {
-	@Id
-	@Column(name = "T_id")
-	private int id;
+@NamedQueries({
+		@NamedQuery(name = "Teacher.findAllRelatedCourses"
+				, query = "select t" +
+				" from Teacher t" +
+				" left join fetch t.courses " +
+				"where t.id = :teacherId")
+})
+public class Teacher extends BaseEntity {
+
 
 	@Column(name = "Firstname")
 	private String fname;
 
 	@Column(name = "Surname")
 	private String sname;
-	
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+			name = "courses_teachers",
+			joinColumns = @JoinColumn(name = "T_id"),
+			inverseJoinColumns = @JoinColumn(name = "C_id"))
+	private List<Course> courses;
+
+
 	public Teacher() {}
 	
 	public Teacher(int id, String fname, String lname) {
@@ -30,14 +42,6 @@ public class Teacher {
 		this.id = id;
 		this.fname = fname;
 		this.sname = lname;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getFname() {

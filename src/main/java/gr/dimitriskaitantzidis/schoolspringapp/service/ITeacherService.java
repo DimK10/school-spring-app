@@ -3,16 +3,20 @@ package gr.dimitriskaitantzidis.schoolspringapp.service;
 
 
 import gr.dimitriskaitantzidis.schoolspringapp.dto.TeacherDTO;
+import gr.dimitriskaitantzidis.schoolspringapp.model.Course;
 import gr.dimitriskaitantzidis.schoolspringapp.model.Teacher;
-import gr.dimitriskaitantzidis.schoolspringapp.service.exceptions.TeacherIdAlreadyExistsException;
-import gr.dimitriskaitantzidis.schoolspringapp.service.exceptions.TeacherNotFoundException;
-import org.springframework.stereotype.Service;
+import gr.dimitriskaitantzidis.schoolspringapp.service.exceptions.teacher.TeacherIdAlreadyExistsException;
+import gr.dimitriskaitantzidis.schoolspringapp.service.exceptions.teacher.TeacherNotFoundException;
+import org.springframework.javapoet.ClassName;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Logger;
 
-public interface ITeacherService {	
-	
+public interface ITeacherService {
+
+	static final Logger LOGGER = Logger.getLogger(ClassName.class.getName());
+
 	/**
 	 * Inserts a {@link Teacher} based on the data carried by the
 	 * {@link TeacherDTO}.
@@ -27,8 +31,8 @@ public interface ITeacherService {
 	 * 			if any error happens between the driver
 	 * 			and the server.
 	 */
-	void insertTeacher(TeacherDTO teacherDTO) 
-			throws TeacherIdAlreadyExistsException, SQLException;
+//	void insertTeacher(TeacherDTO teacherDTO)
+//			throws TeacherIdAlreadyExistsException, SQLException;
 	
 	/**
 	 * Deletes a {@link Teacher} based on the data carried by the
@@ -44,9 +48,9 @@ public interface ITeacherService {
 	 * 			if any error happens between the driver
 	 * 			and the server.
 	 */
-	
-	void deleteTeacher(TeacherDTO teacherDTO)
-			throws TeacherNotFoundException, SQLException;
+
+//	void deleteTeacher(TeacherDTO teacherDTO)
+//			throws TeacherNotFoundException, SQLException;
 	
 	
 	/**
@@ -66,8 +70,8 @@ public interface ITeacherService {
 	 * 			if any error happens between the driver
 	 * 			and the server.
 	 */
-	void updateTeacher(TeacherDTO oldTeacherDTO, TeacherDTO newTeacherDTO) 
-			throws TeacherNotFoundException, SQLException;
+//	void updateTeacher(TeacherDTO oldTeacherDTO, TeacherDTO newTeacherDTO)
+//			throws TeacherNotFoundException, SQLException;
 
 	/**
 	 * Retrieves all {@link Teacher} objects into a list
@@ -76,7 +80,7 @@ public interface ITeacherService {
 	 * 			if any error happens between the driver
 	 * 			and the server.
 	 */
-	List<Teacher> getAllTeachersOrderByLnameFname() throws SQLException;
+//	List<Teacher> getAllTeachersOrderByLnameFname() throws SQLException;
 	
 	
 	/**
@@ -97,6 +101,15 @@ public interface ITeacherService {
 	 * 			if any error happens between the driver
 	 * 			and the server.
 	 */
-	List<Teacher> getTeachersBySurname(String surname) 
-			throws SQLException;
+//	List<Teacher> getTeachersBySurname(String surname)
+//			throws SQLException;
+
+	/**
+	 * This method fetches the courses that are related with a teacher (courses that are being taught by them)
+	 *
+	 * @param teacher The {@link Teacher} entity.
+	 * @return A List of {@link Course} courses.
+	 * @throws SQLException If any error happens between the driver and the server.
+	 */
+	List<Course> getAssociatedCourses(Teacher teacher) throws SQLException;
 }

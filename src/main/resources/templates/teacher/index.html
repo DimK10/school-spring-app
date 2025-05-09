@@ -6,7 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.css}"/>
 </head>
 <body>
-<h1 th:text="'List of Teachers'">Teachers List</h1>
+<h1 th:text="'List of Courses'">Courses List</h1>
 
 <table class="table table-striped">
     <thead>
@@ -17,10 +17,9 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="teacher : ${teachers}">
-        <td th:text="${teacher?.id}">1</td>
-        <td th:text="${teacher?.fname}">Joe</td>
-        <td th:text="${teacher?.sname}">Buck</td>
+    <tr th:each="course : ${courses}">
+        <td th:text="${course?.id}">1</td>
+        <td th:text="${course?.title}">Lesson</td>
     </tr>
     </tbody>
 </table>
