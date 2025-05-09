@@ -27,7 +27,7 @@ public class TeacherController {
 
     @Secured("ROLE_TEACHER")
     @RequestMapping({"", "/index", "/index.html"})
-    public String listTeachersOrderByLnameFname(Model model) throws SQLException, TeacherNotFoundException {
+    public String getAssociatedCoursesByTeacher(Model model) throws SQLException, TeacherNotFoundException {
 
         Integer userId = sessionUser.getUserId(); // todo maybe add spring aop with custom annotation to inject the entity using around invoke
 

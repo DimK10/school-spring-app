@@ -1,0 +1,45 @@
+<!--<div class="sidebar">-->
+<!--    <ul class="nav flex-column">-->
+<!--        <li class="nav-item">-->
+<!--            <a class="nav-link" th:href="@{/dashboard}">Dashboard</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item">-->
+<!--            <a class="nav-link" th:href="@{/users}">Users</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item">-->
+<!--            <a class="nav-link" th:href="@{/settings}">Settings</a>-->
+<!--        </li>-->
+<!--    </ul>-->
+<!--</div>-->
+
+<div th:fragment="sidebar">
+    <div class="sidebar-header border-bottom">
+        <div class="sidebar-brand">School App</div>
+    </div>
+    <ul class="sidebar-nav">
+        <li class="nav-title">AVAILABLE OPTIONS</li>
+        <li class="nav-item">
+            <a class="nav-link active" href="#">
+                <i class="nav-icon cil-speedometer"></i> Nav item
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="#">
+                <i class="nav-icon cil-speedometer"></i> Nav item
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="#">
+                <i class="nav-icon cil-speedometer"></i> Nav item
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="#">
+                <i class="nav-icon cil-speedometer"></i> Nav item
+            </a>
+        </li>
+    </ul>
+    <div class="sidebar-footer border-top d-flex">
+        <button class="sidebar-toggler" type="button"></button>
+    </div>
+</div>
