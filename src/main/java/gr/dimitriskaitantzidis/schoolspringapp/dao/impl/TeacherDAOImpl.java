@@ -5,7 +5,7 @@ import gr.dimitriskaitantzidis.schoolspringapp.dao.ITeacherDAO;
 import gr.dimitriskaitantzidis.schoolspringapp.model.Course;
 import gr.dimitriskaitantzidis.schoolspringapp.model.Teacher;
 import gr.dimitriskaitantzidis.schoolspringapp.util.BasicValidator;
-import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import org.springframework.javapoet.ClassName;
@@ -23,11 +23,8 @@ public class TeacherDAOImpl extends GenericDAO<Teacher, Integer> implements ITea
 
     private static final Logger LOGGER = Logger.getLogger(ClassName.class.getName());
 
-    private final EntityManager em;
-
     public TeacherDAOImpl() {
         super(Teacher.class);
-        this.em = super.getEntityManager();
     }
 
     public Optional<Teacher> getTeacherById(int id) throws SQLException {
@@ -39,13 +36,29 @@ public class TeacherDAOImpl extends GenericDAO<Teacher, Integer> implements ITea
         }
     }
 
+    public Optional<Teacher> getTeacherByUserId(int id) throws SQLException {
+        try {
+            Query query = entityManager.createNamedQuery("Teacher.findByUserId", Teacher.class)
+                    .setParameter("userId", id);
+
+            return Optional.ofNullable((Teacher) query.getSingleResult());
+        } catch (NoResultException nre) {
+            String errorMessage = "The user id " + id + " is not associated with a teacher. ";
+            LOGGER.log(Level.SEVERE, errorMessage);
+            throw new SQLException(errorMessage);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "There was a problem retrieving the data in getTeacherByUserId. Exception is: ", ex);
+            throw new SQLException(ex.getMessage());
+        }
+    }
+
     @Transactional
     public List<Course> getAssociatedCourses(Teacher teacher) throws NullPointerException, SQLException {
         try {
 
             BasicValidator.checkNull(teacher);
 
-            Query query = em.createNamedQuery("Teacher.findAllRelatedCourses", Course.class)
+            Query query = entityManager.createNamedQuery("Course.findAllRelatedCourses")
                     .setParameter("teacherId", teacher.getId());
 
             return new ArrayList<Course>(query.getResultList());

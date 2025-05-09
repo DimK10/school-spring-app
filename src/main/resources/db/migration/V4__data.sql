@@ -1,7 +1,7 @@
 LOCK
     TABLES `teachers` WRITE;
 INSERT INTO `teachers`
-VALUES (1000, 'Fotios', 'Panagiotidis', '1');
+VALUES (1000, 'Fotios', 'Panagiotidis', '2');
 #        (1001, 'Dimitrios', 'Dimitriou'),
 #        (1002, 'Sofia', 'Karamani'),
 #        (1003, 'Eleutheria', 'Petrou');

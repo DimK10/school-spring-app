@@ -17,5 +17,7 @@ public interface ITeacherDAO {
 //	List<Teacher> getTeachersBySurname(String surname) throws SQLException;
 	Optional<Teacher> getTeacherById(int id) throws SQLException;
 
+	Optional<Teacher> getTeacherByUserId(int id) throws SQLException;
+
 	List<Course> getAssociatedCourses(Teacher teacher) throws SQLException;
 }

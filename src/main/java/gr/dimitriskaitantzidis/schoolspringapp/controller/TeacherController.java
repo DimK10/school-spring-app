@@ -32,7 +32,7 @@ public class TeacherController {
         Integer userId = sessionUser.getUserId(); // todo maybe add spring aop with custom annotation to inject the entity using around invoke
 
         Optional<Teacher> teacherOptional =
-                teacherDAO.getTeacherById(userId); // todo maybe add spring aop with custom annotation to inject the entity using around invoke
+                teacherDAO.getTeacherByUserId(userId); // todo maybe add spring aop with custom annotation to inject the entity using around invoke
 
         if (teacherOptional.isEmpty()) {
             throw new TeacherNotFoundException("User id " + userId + " is not associated with a teacher. This should not have happened");
