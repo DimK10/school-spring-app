@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.sql.SQLException;
 import java.util.Optional;
 
-@RequestMapping("/teacher")
+@RequestMapping("/teachers")
 @Controller
 public class TeacherController {
 
@@ -40,6 +40,6 @@ public class TeacherController {
 
         model.addAttribute("courses", teacherDAO.getAssociatedCourses(teacherOptional.get()));
 
-        return "teacher/index";
+        return "teachers/index";
     }
 }

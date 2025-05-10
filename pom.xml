@@ -105,9 +105,12 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>11.8.0</version>
                 <configuration>
-                    <url>jdbc:mysql://localhost:3306/schoolapp</url>
+                    <url>jdbc:mysql://localhost:3306</url>
                     <user>root</user>
                     <password>root</password>
+                    <schemas>
+                        <schema>schoolapp</schema>
+                    </schemas>
                 </configuration>
             </plugin>
             <plugin>

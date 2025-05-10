@@ -1,7 +1,7 @@
-CREATE
-    DATABASE IF NOT EXISTS `schoolapp`;
-USE
-    `schoolapp`;
+-- CREATE
+--     DATABASE IF NOT EXISTS `schoolapp`;
+-- USE
+--     `schoolapp`;
 
 CREATE TABLE `teachers`
 (
