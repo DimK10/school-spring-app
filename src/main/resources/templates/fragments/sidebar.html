@@ -1,34 +1,19 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::nav},'teachers')}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<div th:fragment="sidebar">
+<div class="sidebar sidebar-dark sidebar-fixed border-end" id="sidebar" th:fragment="sidebar">
     <div class="sidebar-header border-bottom">
         <div class="sidebar-brand">School App</div>
     </div>
     <ul class="sidebar-nav">
-        <li class="nav-title">AVAILABLE OPTIONS</li>
-        <li class="nav-item">
-            <a class="nav-link active" href="#">
-                <i class="nav-icon cil-speedometer"></i> Nav item
+        <li class="nav-title">Available Options</li>
+        <li class="nav-item" th:fragment="menuItem (path,active,title,glyph,text)">
+            <a class="nav-link" th:class="${active==menu ? 'nav-link active' : 'nav-link'}"
+               th:href="@{__${path}__}" th:title="${title}">
+                <span th:text="${text}">Template</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link active" href="#">
-                <i class="nav-icon cil-speedometer"></i> Nav item
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" href="#">
-                <i class="nav-icon cil-speedometer"></i> Nav item
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" href="#">
-                <i class="nav-icon cil-speedometer"></i> Nav item
-            </a>
+        <li class="nav-item"
+            th:replace="::menuItem ('/teachers','teachers','teacher courses','search','Teachers Dashboard')">
         </li>
     </ul>
-    <div class="sidebar-footer border-top d-flex">
-        <button class="sidebar-toggler" type="button"></button>
-    </div>
 </div>
