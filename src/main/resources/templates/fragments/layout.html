@@ -3,7 +3,7 @@
       th:fragment="layout (template, menu)">
 <head>
     <meta charset="UTF-8"/>
-    <title>Title</title>
+    <title th:text="${menu}">Main Page</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.css}"/>
     <link rel="stylesheet" th:href="@{/css/coreui/coreui.css}"/>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
@@ -49,6 +49,9 @@
                         <button class="btn btn-link nav-link py-2 px-2 d-flex align-items-center" type="submit" aria-expanded="false">
                             Logout
                         </button>
+                        <input th:type="hidden"
+                               th:name="${_csrf.parameterName}"
+                               th:value="${_csrf.token}"/>
                     </form>
 
                     <ul class="dropdown-menu dropdown-menu-end" style="--cui-dropdown-min-width: 8rem;">
@@ -87,7 +90,7 @@
     <div class="body flex-grow-1">
         <div class="container-lg px-4">
             <div class="row g-4 mb-4">
-                <th:block th:include="${template}"/>
+                <th:block th:insert="${template}"/>
             </div>
         </div>
     </div>

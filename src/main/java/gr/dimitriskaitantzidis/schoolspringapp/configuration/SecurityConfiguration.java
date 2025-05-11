@@ -1,5 +1,6 @@
 package gr.dimitriskaitantzidis.schoolspringapp.configuration;
 
+import gr.dimitriskaitantzidis.schoolspringapp.enums.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -23,8 +24,9 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/css/**", "/js/**", "/images/**", "/icons/**", "/img/**", "/login", "/error").permitAll()
-                        .requestMatchers("/teacher/**").hasRole("TEACHER")
-                        .requestMatchers("/student/**").hasAuthority("STUDENT")
+                        .requestMatchers("/admin/**").hasRole(Role.ROLE_ADMIN.getAbbreviated())
+                        .requestMatchers("/teacher/**").hasRole(Role.ROLE_TEACHER.getAbbreviated())
+                        .requestMatchers("/student/**").hasRole(Role.ROLE_STUDENT.getAbbreviated())
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

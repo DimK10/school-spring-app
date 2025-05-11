@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.sql.SQLException;
 
-import static gr.dimitriskaitantzidis.schoolspringapp.util.Constants.ROLE_STUDENT;
-
 
 @RequestMapping("/student")
 @Controller
@@ -17,7 +15,7 @@ public class StudentController {
     public StudentController() {
     }
 
-    @Secured(ROLE_STUDENT)
+    @Secured("ROLE_STUDENT")
     @RequestMapping({ "", "/index", "/index.html"})
     public String index(Model model) throws SQLException {
         return "student/index";

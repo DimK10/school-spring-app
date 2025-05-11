@@ -13,13 +13,13 @@
             </a>
         </li>
         <li sec:authorize="hasRole('ADMIN')" class="nav-item"
-            th:replace="::menuItem ('/admin','admin','admin','Administrators Dashboard')">
+            th:replace="~{::menuItem ('/admin','admin','admin','Administrators Dashboard')}">
         </li>
         <li sec:authorize="hasRole('TEACHER')" class="nav-item"
-            th:replace="::menuItem ('/teacher','teacher','teacher courses','Teachers Dashboard')">
+            th:replace="~{::menuItem ('/teacher','teacher','teacher courses','Teachers Dashboard')}">
         </li>
         <li sec:authorize="hasRole('STUDENT')" class="nav-item"
-            th:replace="::menuItem ('/student','student','student','Students Dashboard')">
+            th:replace="~{::menuItem ('/student','student','student','Students Dashboard')}">
         </li>
     </ul>
 </div>
