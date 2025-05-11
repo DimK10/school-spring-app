@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.sql.SQLException;
 import java.util.Optional;
 
-@RequestMapping("/teachers")
+import static gr.dimitriskaitantzidis.schoolspringapp.util.Constants.ROLE_TEACHER;
+
+@RequestMapping("/teacher")
 @Controller
 public class TeacherController {
 
@@ -25,7 +27,7 @@ public class TeacherController {
         this.sessionUser = sessionUser;
     }
 
-    @Secured("ROLE_TEACHER")
+    @Secured(ROLE_TEACHER)
     @RequestMapping({"", "/index", "/index.html"})
     public String getAssociatedCoursesByTeacher(Model model) throws SQLException, TeacherNotFoundException {
 
@@ -40,6 +42,6 @@ public class TeacherController {
 
         model.addAttribute("courses", teacherDAO.getAssociatedCourses(teacherOptional.get()));
 
-        return "teachers/index";
+        return "teacher/index";
     }
 }

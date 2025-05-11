@@ -1,4 +1,4 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <div class="sidebar sidebar-dark sidebar-fixed border-end" id="sidebar" th:fragment="sidebar">
     <div class="sidebar-header border-bottom">
@@ -6,14 +6,20 @@
     </div>
     <ul class="sidebar-nav">
         <li class="nav-title">Available Options</li>
-        <li class="nav-item" th:fragment="menuItem (path,active,title,glyph,text)">
+        <li class="nav-item" th:fragment="menuItem (path,active,title,text)">
             <a class="nav-link" th:class="${active==menu ? 'nav-link active' : 'nav-link'}"
                th:href="@{__${path}__}" th:title="${title}">
                 <span th:text="${text}">Template</span>
             </a>
         </li>
-        <li class="nav-item"
-            th:replace="::menuItem ('/teachers','teachers','teacher courses','search','Teachers Dashboard')">
+        <li sec:authorize="hasRole('ADMIN')" class="nav-item"
+            th:replace="::menuItem ('/admin','admin','admin','Administrators Dashboard')">
+        </li>
+        <li sec:authorize="hasRole('TEACHER')" class="nav-item"
+            th:replace="::menuItem ('/teacher','teacher','teacher courses','Teachers Dashboard')">
+        </li>
+        <li sec:authorize="hasRole('STUDENT')" class="nav-item"
+            th:replace="::menuItem ('/student','student','student','Students Dashboard')">
         </li>
     </ul>
 </div>
