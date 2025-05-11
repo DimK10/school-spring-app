@@ -17,6 +17,17 @@ CREATE TABLE `students`
 (
     `id` int NOT NULL,
     `Name` varchar(10) NOT NULL,
+    `U_id` INT NOT NULL,
+
+    PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `administrators`
+(
+    `id`   INT         NOT NULL,
+    `Name` varchar(10) NOT NULL,
+    `U_id` INT         NOT NULL,
+
     PRIMARY KEY (`id`)
 );
 
