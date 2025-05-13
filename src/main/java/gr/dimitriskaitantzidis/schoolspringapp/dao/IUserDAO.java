@@ -15,9 +15,9 @@ public interface IUserDAO {
 
     List<UserDTO> getAllUsersOrderByName();
 
-    void saveUser(UserDTO userDTO) throws SQLException;
+    void saveUser(UserDTO userDTO) throws SQLException, IllegalArgumentException;
 
-    void updateUser(UserDTO user);
+    void updateUser(UserDTO user) throws SQLException, IllegalArgumentException;
 
-    void deleteUser(int id);
+    void deleteUser(int id) throws SQLException, IllegalArgumentException;
 }

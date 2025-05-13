@@ -20,4 +20,10 @@ public interface ITeacherDAO {
 	Optional<Teacher> getTeacherByUserId(int id) throws SQLException;
 
 	List<Course> getAssociatedCourses(Teacher teacher) throws SQLException;
+
+	void saveTeacher(Teacher teacher) throws SQLException, IllegalArgumentException;
+
+	void updateTeacher(Teacher teacher) throws SQLException, IllegalArgumentException;
+
+	void deleteTeacher(Teacher teacher) throws SQLException, IllegalArgumentException;
 }

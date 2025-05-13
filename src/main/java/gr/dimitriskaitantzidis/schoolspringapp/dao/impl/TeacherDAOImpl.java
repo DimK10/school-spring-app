@@ -7,9 +7,10 @@ import gr.dimitriskaitantzidis.schoolspringapp.model.Teacher;
 import gr.dimitriskaitantzidis.schoolspringapp.util.BasicValidator;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
-import jakarta.transaction.Transactional;
 import org.springframework.javapoet.ClassName;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -69,5 +70,45 @@ public class TeacherDAOImpl extends GenericDAO<Teacher, Integer> implements ITea
             LOGGER.log(Level.SEVERE, "There was a problem retrieving the data in getAllTeachers. Exception is: ", ex);
             throw new SQLException(ex.getMessage());
         }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+    public void saveTeacher(Teacher teacher) throws SQLException, IllegalArgumentException {
+        try {
+            entityManager.persist(teacher);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
+            throw new SQLException("There was an error when saving the teacher. " + ex);
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+    public void updateTeacher(Teacher updatedTeacher) throws SQLException, IllegalArgumentException {
+        try {
+            Optional<Teacher> existingTeacherOptional = findById(updatedTeacher.getId());
+
+            if (existingTeacherOptional.isEmpty()) {
+                throw new IllegalArgumentException("The teacher with given id: " +
+                        updatedTeacher.getId() + " does not exist");
+            }
+
+            Teacher teacherFromDb = existingTeacherOptional.get();
+
+            teacherFromDb.setFname(updatedTeacher.getFname());
+            teacherFromDb.setSname(updatedTeacher.getSname());
+
+            entityManager.merge(teacherFromDb);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
+            throw new SQLException("There was an error when saving the student. " + ex);
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+    public void deleteTeacher(Teacher teacher) throws SQLException, IllegalArgumentException {
+
     }
 }
