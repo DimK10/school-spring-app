@@ -108,7 +108,16 @@ public class TeacherDAOImpl extends GenericDAO<Teacher, Integer> implements ITea
 
     @Override
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-    public void deleteTeacher(Teacher teacher) throws SQLException, IllegalArgumentException {
-
+    public void deleteTeacher(int teacherId) throws SQLException, IllegalArgumentException {
+        try {
+            Optional<Teacher> teacherOpt = findById(teacherId);
+            if (teacherOpt.isEmpty()) {
+                throw new IllegalArgumentException("The teacher with given id " + teacherId + " does not exist");
+            }
+            entityManager.remove(teacherOpt.get());
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
+            throw new SQLException("There was an error when deleting the teacher. " + ex);
+        }
     }
 }

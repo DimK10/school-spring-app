@@ -129,9 +129,26 @@ public class UserDAOImpl extends GenericDAO<User, Integer> implements IUserDAO {
 
     @Override
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-    public void deleteUser(int id) throws SQLException, IllegalArgumentException {
+    public void deleteUser(int userId) throws SQLException, IllegalArgumentException {
         try {
 
+            Optional<User> existingUserOptional = findById(userId);
+            if (existingUserOptional.isEmpty()) {
+                throw new IllegalArgumentException("The user with given id " + userId + " does not exist");
+            }
+
+            User userFromDB = existingUserOptional.get();
+
+            if ((userFromDB.getRole()).equals(Role.ROLE_TEACHER)) {
+                teacherDAO.deleteTeacher(userFromDB.getTeacher().getId());
+            }
+
+
+            if ((userFromDB.getRole()).equals(Role.ROLE_STUDENT)) {
+                studentDAO.deleteStudent(userFromDB.getStudent().getId());
+            }
+
+            entityManager.remove(userFromDB);
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
             throw new SQLException("There was an error when deleting the user. " + ex);

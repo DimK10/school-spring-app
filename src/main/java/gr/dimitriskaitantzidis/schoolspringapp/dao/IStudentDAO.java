@@ -10,5 +10,5 @@ public interface IStudentDAO {
 
     void updateStudent(Student student) throws SQLException, IllegalArgumentException;
 
-    void deleteStudent(Student student) throws SQLException, IllegalArgumentException;
+    void deleteStudent(int studentId) throws SQLException, IllegalArgumentException;
 }

@@ -5,6 +5,8 @@ import gr.dimitriskaitantzidis.schoolspringapp.dao.IStudentDAO;
 import gr.dimitriskaitantzidis.schoolspringapp.model.Student;
 import org.springframework.javapoet.ClassName;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 import java.util.Optional;
@@ -52,7 +54,17 @@ public class StudentDAOImpl extends GenericDAO<Student, Integer> implements IStu
     }
 
     @Override
-    public void deleteStudent(Student student) throws SQLException, IllegalArgumentException {
-
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+    public void deleteStudent(int studentId) throws SQLException, IllegalArgumentException {
+        try {
+            Optional<Student> studentOptional = findById(studentId);
+            if (studentOptional.isEmpty()) {
+                throw new IllegalArgumentException("The student with given id " + studentId + " does not exist");
+            }
+            entityManager.remove(studentOptional.get());
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
+            throw new SQLException("There was an error when deleting the student. " + ex);
+        }
     }
 }

@@ -10,11 +10,7 @@ import java.util.Optional;
 
 
 public interface ITeacherDAO {
-	//	void insert(Teacher teacher) throws SQLException;
-//	void delete(Teacher teacher) throws SQLException;
-//	void update(Teacher oldTeacher, Teacher newTeacher) throws SQLException;
-//	List<Teacher> getAllTeachersOrderByLnameFname() throws SQLException;
-//	List<Teacher> getTeachersBySurname(String surname) throws SQLException;
+
 	Optional<Teacher> getTeacherById(int id) throws SQLException;
 
 	Optional<Teacher> getTeacherByUserId(int id) throws SQLException;
@@ -25,5 +21,5 @@ public interface ITeacherDAO {
 
 	void updateTeacher(Teacher teacher) throws SQLException, IllegalArgumentException;
 
-	void deleteTeacher(Teacher teacher) throws SQLException, IllegalArgumentException;
+	void deleteTeacher(int teacherId) throws SQLException, IllegalArgumentException;
 }
