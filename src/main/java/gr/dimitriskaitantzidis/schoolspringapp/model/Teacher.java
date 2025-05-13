@@ -1,5 +1,6 @@
 package gr.dimitriskaitantzidis.schoolspringapp.model;
 
+import gr.dimitriskaitantzidis.schoolspringapp.dto.UserDTO;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -57,6 +58,13 @@ public class Teacher extends BaseUserEntity {
 
     public void setSname(String sname) {
         this.sname = sname;
+    }
+
+    @Override
+    public UserDTO toUserDTO() {
+        UserDTO userDTO = super.toUserDTO();
+        userDTO.setName(String.format("%s %s", fname, sname));
+        return userDTO;
     }
 
     @Override

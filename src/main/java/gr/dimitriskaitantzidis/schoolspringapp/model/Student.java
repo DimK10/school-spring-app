@@ -1,8 +1,8 @@
 package gr.dimitriskaitantzidis.schoolspringapp.model;
 
+import gr.dimitriskaitantzidis.schoolspringapp.dto.UserDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -12,7 +12,6 @@ public class Student extends BaseUserEntity {
     @Column(name = "name")
     private String name;
 
-    @OneToMany
 
     public String getName() {
         return name;
@@ -20,5 +19,12 @@ public class Student extends BaseUserEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public UserDTO toUserDTO() {
+        UserDTO userDTO = super.toUserDTO();
+        userDTO.setName(name);
+        return userDTO;
     }
 }

@@ -1,6 +1,15 @@
 package gr.dimitriskaitantzidis.schoolspringapp.dto;
 
-public class TeacherDTO {
+import gr.dimitriskaitantzidis.schoolspringapp.model.Teacher;
+
+import java.io.Serial;
+import java.io.Serializable;
+
+public class TeacherDTO implements BaseDTO<Teacher>, Serializable {
+
+	@Serial
+	private static final long serialVersionUID = 1L;
+
 	private int id;
 	private String fname;
 	private String sname;
@@ -12,6 +21,15 @@ public class TeacherDTO {
 		this.id = id;
 		this.fname = fname;
 		this.sname = lname;
+	}
+
+	@Override
+	public Teacher toEntity() {
+		Teacher teacher = new Teacher();
+		teacher.setId(id);
+		teacher.setFname(fname);
+		teacher.setSname(sname);
+		return teacher;
 	}
 
 	public int getId() {

@@ -1,5 +1,6 @@
 package gr.dimitriskaitantzidis.schoolspringapp.model;
 
+import gr.dimitriskaitantzidis.schoolspringapp.dto.UserDTO;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MappedSuperclass;
@@ -18,5 +19,11 @@ public abstract class BaseUserEntity extends BaseEntity {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public UserDTO toUserDTO() {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUserId(this.getUser().getId());
+        return userDTO;
     }
 }

@@ -16,7 +16,7 @@ public class AdminController {
 
     @Secured(ROLE_ADMIN)
     @RequestMapping({"", "/index", "/index.html"})
-    public String getAssociatedCoursesByTeacher(Model model) throws SQLException, TeacherNotFoundException {
+    public String index(Model model) throws SQLException, TeacherNotFoundException {
 
 
         return "admin/index";
