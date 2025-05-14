@@ -10,6 +10,7 @@ import gr.dimitriskaitantzidis.schoolspringapp.enums.Role;
 import gr.dimitriskaitantzidis.schoolspringapp.model.User;
 import gr.dimitriskaitantzidis.schoolspringapp.model.User_;
 import gr.dimitriskaitantzidis.schoolspringapp.util.PasswordHashGenerator;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 import org.springframework.javapoet.ClassName;
 import org.springframework.stereotype.Repository;
@@ -47,6 +48,18 @@ public class UserDAOImpl extends GenericDAO<User, Integer> implements IUserDAO {
     @Override
     public Optional<User> getUserById(int id) {
         return super.findById(id).stream().findFirst();
+    }
+
+    @Override
+    public Optional<UserDTO> getUserDTOById(int id) throws SQLException {
+        try {
+            Query query = entityManager.createNamedQuery("User.getUserDTONative")
+                    .setParameter("userId", id);
+            return Optional.ofNullable((UserDTO) query.getSingleResult());
+        } catch (NoResultException ex) {
+            LOGGER.log(Level.SEVERE, "The user with given id: " + id + " was not found." + ex.getMessage(), ex);
+            throw new SQLException("There was an error when saving the user. " + ex);
+        }
     }
 
     @Override

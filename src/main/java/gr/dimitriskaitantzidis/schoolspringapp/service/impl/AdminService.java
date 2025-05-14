@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AdminService implements IAdminService {
@@ -25,6 +26,11 @@ public class AdminService implements IAdminService {
     @Override
     public List<UserDTO> getAllUsersOrderByName() {
         return userDAO.getAllUsersOrderByName();
+    }
+
+    @Override
+    public Optional<UserDTO> getUserDTOByUserId(Integer userId) throws SQLException {
+        return userDAO.getUserDTOById(userId);
     }
 
     @Override

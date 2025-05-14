@@ -17,11 +17,22 @@ import jakarta.persistence.*;
                 "           when 'ROLE_STUDENT' THEN (select Name from students s where u.id = s.U_id) " +
                 "           ELSE '-' END name " +
                 "from users u " +
-                "order by Name", resultSetMapping = "UserDTOSelectAllMapping")
+                "order by Name", resultSetMapping = "UserDTOMapping")
+        , @NamedNativeQuery(name = "User.getUserDTONative"
+        , query = "select u.id userId, " +
+        "       u.user_name username, " +
+        "       u.email, " +
+        "       u.role, " +
+        "       case role " +
+        "           when 'ROLE_TEACHER' THEN (select CONCAT(Firstname, ' ', Surname) from teachers t where u.id = t.U_id) " +
+        "           when 'ROLE_STUDENT' THEN (select Name from students s where u.id = s.U_id) " +
+        "           ELSE '-' END name " +
+        "from users u " +
+        " where u.id = :userId", resultSetMapping = "UserDTOMapping")
 })
 
 @SqlResultSetMappings({
-        @SqlResultSetMapping(name = "UserDTOSelectAllMapping", classes = {
+        @SqlResultSetMapping(name = "UserDTOMapping", classes = {
                 @ConstructorResult(
                         targetClass = UserDTO.class
                         , columns = {

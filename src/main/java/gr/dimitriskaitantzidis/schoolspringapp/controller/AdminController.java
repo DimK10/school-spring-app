@@ -8,12 +8,11 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 import static gr.dimitriskaitantzidis.schoolspringapp.util.Constants.ROLE_ADMIN;
 
@@ -57,6 +56,36 @@ public class AdminController {
 
 
         adminService.insertUser(userDTO);
+        return "redirect:/admin/index";
+    }
+
+
+    @Secured(ROLE_ADMIN)
+    @RequestMapping({"/update/{userId}", "update/index/{userId}"})
+    public String updateUser(Model model, @Valid @PathVariable Integer userId) throws SQLException {
+
+        Optional<UserDTO> userDTOOptional = adminService.getUserDTOByUserId(userId);
+
+        if (userDTOOptional.isEmpty()) {
+            return "error";
+        }
+
+        model.addAttribute("userDTO", userDTOOptional.get());
+
+        return "admin/create/index";
+    }
+
+    @PutMapping("/update")
+    public String handleUpdateUser(
+            @Valid @ModelAttribute("userDTO") UserDTO userDTO,
+            BindingResult bindingResult) throws SQLException {
+
+        if (bindingResult.hasErrors()) {
+            return "admin/update/index";
+        }
+
+
+        adminService.updateUser(userDTO);
         return "redirect:/admin/index";
     }
 }

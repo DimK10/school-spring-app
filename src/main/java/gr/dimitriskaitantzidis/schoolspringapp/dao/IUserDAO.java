@@ -11,7 +11,9 @@ public interface IUserDAO {
 
     Optional<User> getUserByEmail(String email);
 
-    Optional<User> getUserById(int id);
+    Optional<User> getUserById(int id) throws SQLException;
+
+    Optional<UserDTO> getUserDTOById(int id) throws SQLException;
 
     List<UserDTO> getAllUsersOrderByName();
 
