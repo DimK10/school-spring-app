@@ -25,6 +25,7 @@ public class StudentDTO implements BaseDTO<Student>, Serializable {
     public Student toEntity(Record record) {
         Student student = new Student();
         student.setId(this.id);
+        student.setId(record.equals(Record.CREATE) ? null : this.id);
         student.setName(this.name);
         return student;
     }

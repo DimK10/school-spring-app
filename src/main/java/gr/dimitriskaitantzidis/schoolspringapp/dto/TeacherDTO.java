@@ -28,7 +28,7 @@ public class TeacherDTO implements BaseDTO<Teacher>, Serializable {
 	@Override
 	public Teacher toEntity(Record record) {
 		Teacher teacher = new Teacher();
-		teacher.setId(id);
+		teacher.setId(record.equals(Record.CREATE) ? null : this.id);
 		teacher.setFname(fname);
 		teacher.setSname(sname);
 		return teacher;
