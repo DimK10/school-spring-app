@@ -3,6 +3,8 @@ package gr.dimitriskaitantzidis.schoolspringapp.dao.impl;
 import gr.dimitriskaitantzidis.schoolspringapp.dao.GenericDAO;
 import gr.dimitriskaitantzidis.schoolspringapp.dao.IStudentDAO;
 import gr.dimitriskaitantzidis.schoolspringapp.model.Student;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.Query;
 import org.springframework.javapoet.ClassName;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -20,6 +22,23 @@ public class StudentDAOImpl extends GenericDAO<Student, Integer> implements IStu
 
     public StudentDAOImpl() {
         super(Student.class);
+    }
+
+    @Override
+    public Optional<Student> getStudentByUserId(int id) throws SQLException {
+        try {
+            Query query = entityManager.createNamedQuery("Student.findByUserId", Student.class)
+                    .setParameter("userId", id);
+
+            return Optional.ofNullable((Student) query.getSingleResult());
+        } catch (NoResultException nre) {
+            String errorMessage = "The user id " + id + " is not associated with a Student. ";
+            LOGGER.log(Level.SEVERE, errorMessage);
+            throw new SQLException(errorMessage);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "There was a problem retrieving the data in getStudentByUserId. Exception is: ", ex);
+            throw new SQLException(ex.getMessage());
+        }
     }
 
     @Override

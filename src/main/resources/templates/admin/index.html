@@ -23,15 +23,22 @@
                 <th style="width: 150px;">Email</th>
                 <th style="width: 150px;">Role</th>
                 <th style="width: 150px;">First Name - Last Name</th>
+                <th style="width: 150px;">Update</th>
+                <th style="width: 150px;">Delete</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="user : ${users}">
-                <td th:text="${user?.userId}">userId</td>
+                <td th:text="${user.userId}">userId</td>
                 <td th:text="${user?.username}">username</td>
                 <td th:text="${user?.email}">email</td>
                 <td th:text="${user?.roleLabel}">role</td>
                 <td th:text="${user?.name}">name</td>
+                <td><a th:href="@{/admin/update/{id}(id=${user.userId})}" class="btn btn-primary"
+                       role="button">Update</a></td>
+                <td><a th:href="@{/admin/delete/{id}(id=${user.userId})}" class="btn btn-primary"
+                       role="button">Delete</a></td>
+
             </tr>
             </tbody>
         </table>

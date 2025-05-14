@@ -7,6 +7,8 @@ import gr.dimitriskaitantzidis.schoolspringapp.dao.IUserDAO;
 import gr.dimitriskaitantzidis.schoolspringapp.dto.UserDTO;
 import gr.dimitriskaitantzidis.schoolspringapp.enums.Record;
 import gr.dimitriskaitantzidis.schoolspringapp.enums.Role;
+import gr.dimitriskaitantzidis.schoolspringapp.model.Student;
+import gr.dimitriskaitantzidis.schoolspringapp.model.Teacher;
 import gr.dimitriskaitantzidis.schoolspringapp.model.User;
 import gr.dimitriskaitantzidis.schoolspringapp.model.User_;
 import gr.dimitriskaitantzidis.schoolspringapp.util.PasswordHashGenerator;
@@ -123,19 +125,43 @@ public class UserDAOImpl extends GenericDAO<User, Integer> implements IUserDAO {
             userFromDB.setUserName(updatedUser.getUserName());
             userFromDB.setEmail(updatedUser.getEmail());
             userFromDB.setRole(updatedUser.getRole());
+            userFromDB.setName(userDTO.getName());
 
             if (Role.valueOf(userDTO.getRole()).equals(Role.ROLE_TEACHER)) {
                 if (userDTO.getTeacherDTO() == null) {
                     throw new IllegalArgumentException("The teacherDTO in userDTO is null");
                 }
-                teacherDAO.updateTeacher(userDTO.getTeacherDTO().toEntity(Record.UPDATE, userFromDB));
+                Optional<Teacher> teacherOptional = teacherDAO.getTeacherByUserId(userFromDB.getId());
+
+                if (teacherOptional.isEmpty()) {
+                    throw new IllegalArgumentException("The teacherDTO in userDTO is null");
+                }
+
+                Teacher teacherFromDB = teacherOptional.get();
+
+                teacherFromDB.setFname(userDTO.getName().substring(0, 1));
+                teacherFromDB.setSname(userDTO.getName().substring(1));
+
+                teacherDAO.updateTeacher(teacherFromDB);
             }
 
             if (Role.valueOf(userDTO.getRole()).equals(Role.ROLE_STUDENT)) {
                 if (userDTO.getStudentDTO() == null) {
-                    throw new IllegalArgumentException("The studentDTO in userDTO is null");
+                    throw new IllegalArgumentException("Could not retrieve teacher record from user id " + userDTO.getUserId());
                 }
-                studentDAO.updateStudent(userDTO.getStudentDTO().toEntity(Record.UPDATE, userFromDB));
+
+                Optional<Student> studentOptional = studentDAO.getStudentByUserId(userFromDB.getId());
+
+                if (studentOptional.isEmpty()) {
+                    throw new IllegalArgumentException("Could not retrieve student record from user id " + userDTO.getUserId());
+                }
+
+                Student studentFromDb = studentOptional.get();
+
+                studentFromDb.setName(userDTO.getName());
+
+
+                studentDAO.updateStudent(studentFromDb);
             }
 
 

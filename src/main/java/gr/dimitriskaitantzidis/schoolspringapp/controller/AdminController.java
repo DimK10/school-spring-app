@@ -8,7 +8,10 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -37,6 +40,38 @@ public class AdminController {
     }
 
     @Secured(ROLE_ADMIN)
+    @RequestMapping({"/update/{userId}", "update/index/{userId}"})
+    public String updateUser(Model model, @Valid @PathVariable Integer userId) throws SQLException {
+
+        Optional<UserDTO> userDTOOptional = adminService.getUserDTOByUserId(userId);
+
+        if (userDTOOptional.isEmpty()) {
+            return "error";
+        }
+
+        model.addAttribute("userDTO", userDTOOptional.get());
+
+        return "admin/update/index";
+    }
+
+    @PostMapping("/update/{userId}")
+    public String handleUpdateUser(
+            @Valid @ModelAttribute("userDTO") UserDTO userDTO,
+            BindingResult bindingResult,
+            @Valid @PathVariable Integer userId) throws SQLException {
+
+        userDTO.setUserId(userId);
+
+        if (bindingResult.hasErrors()) {
+            return "admin/update/index";
+        }
+
+
+        adminService.updateUser(userDTO);
+        return "redirect:/admin/index";
+    }
+
+    @Secured(ROLE_ADMIN)
     @RequestMapping({"/create", "create/index", "create/index.html"})
     public String createUser(Model model) {
 
@@ -60,32 +95,5 @@ public class AdminController {
     }
 
 
-    @Secured(ROLE_ADMIN)
-    @RequestMapping({"/update/{userId}", "update/index/{userId}"})
-    public String updateUser(Model model, @Valid @PathVariable Integer userId) throws SQLException {
 
-        Optional<UserDTO> userDTOOptional = adminService.getUserDTOByUserId(userId);
-
-        if (userDTOOptional.isEmpty()) {
-            return "error";
-        }
-
-        model.addAttribute("userDTO", userDTOOptional.get());
-
-        return "admin/create/index";
-    }
-
-    @PutMapping("/update")
-    public String handleUpdateUser(
-            @Valid @ModelAttribute("userDTO") UserDTO userDTO,
-            BindingResult bindingResult) throws SQLException {
-
-        if (bindingResult.hasErrors()) {
-            return "admin/update/index";
-        }
-
-
-        adminService.updateUser(userDTO);
-        return "redirect:/admin/index";
-    }
 }

@@ -1,12 +1,17 @@
 package gr.dimitriskaitantzidis.schoolspringapp.model;
 
 import gr.dimitriskaitantzidis.schoolspringapp.dto.UserDTO;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "students")
+@NamedQueries({
+        @NamedQuery(name = "Student.findByUserId"
+                , query = "select s" +
+                " from Student s" +
+                " left join fetch s.user u " +
+                "where u.id = :userId")
+})
 public class Student extends BaseUserEntity {
 
     @Column(name = "name")
