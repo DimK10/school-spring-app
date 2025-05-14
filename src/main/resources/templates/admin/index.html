@@ -36,8 +36,14 @@
                 <td th:text="${user?.name}">name</td>
                 <td><a th:href="@{/admin/update/{id}(id=${user.userId})}" class="btn btn-primary"
                        role="button">Update</a></td>
-                <td><a th:href="@{/admin/delete/{id}(id=${user.userId})}" class="btn btn-primary"
-                       role="button">Delete</a></td>
+
+                <td>
+                    <form th:action="@{/admin/delete/{id}(id=${user.userId})}" th:object="${userDTO}" method="POST">
+                        <button class="btn btn-danger" th:type="submit"
+                                role="button">Delete
+                        </button>
+                    </form>
+                </td>
 
             </tr>
             </tbody>

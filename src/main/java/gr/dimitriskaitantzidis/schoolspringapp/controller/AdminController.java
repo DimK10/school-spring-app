@@ -95,5 +95,21 @@ public class AdminController {
     }
 
 
+    @PostMapping("/delete/{userId}")
+    public String handleDeleteUser(
+            @Valid @ModelAttribute("userDTO") UserDTO userDTO,
+            BindingResult bindingResult, @Valid @PathVariable Integer userId) throws SQLException {
+
+        if (bindingResult.hasErrors()) {
+            return "admin/index";
+        }
+
+        userDTO.setUserId(userId);
+
+        adminService.deleteUser(userDTO);
+        return "redirect:/admin/index";
+    }
+
+
 
 }

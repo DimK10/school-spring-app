@@ -35,5 +35,19 @@ All the users are located in the users table, and the password to log in in ever
 In case the user chooses to make changes, he\she can use the utility classes <b>PasswordHashChecker</b> and <b>
 PasswordHashGenerator</b>
 
+---
+
+## Crud operations
+
+The crud operations happen in the admin account
+
+```
+username: jdoe@test.com
+password: 1234
+```
+
+in the /admin page
+
+The other pages (/teacher and /student are basic)
 
 

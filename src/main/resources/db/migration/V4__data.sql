@@ -20,15 +20,15 @@ VALUES (1000, 'Nick', 3);
 UNLOCK
     TABLES;
 
-LOCK
-    TABLES `administrators` WRITE;
-INSERT INTO `administrators`
-VALUES (1000, 'Kostas', 1);
-#        (1001, 'Teo'),
-#        (1002, 'Sofia'),
-#        (1003, 'Maria');
-UNLOCK
-    TABLES;
+# LOCK
+#     TABLES `administrators` WRITE;
+# INSERT INTO `administrators`
+# VALUES (1000, 'Kostas', 1);
+# #        (1001, 'Teo'),
+# #        (1002, 'Sofia'),
+# #        (1003, 'Maria');
+# UNLOCK
+#     TABLES;
 
 LOCK
     TABLES `courses` WRITE;
@@ -40,12 +40,12 @@ VALUES (101, 'Programming'),
 UNLOCK
     TABLES;
 
-LOCK
-    TABLES `grades` WRITE;
-INSERT INTO `grades`
-VALUES (1000, 435, 5);
-#        (1002, 876, 7),
-#        (1003, 222, 6),
-#        (1003, 876, 10);
-UNLOCK
-    TABLES;
+# LOCK
+#     TABLES `grades` WRITE;
+# INSERT INTO `grades`
+# VALUES (1000, 435, 5);
+# #        (1002, 876, 7),
+# #        (1003, 222, 6),
+# #        (1003, 876, 10);
+# UNLOCK
+#     TABLES;

@@ -184,12 +184,24 @@ public class UserDAOImpl extends GenericDAO<User, Integer> implements IUserDAO {
             User userFromDB = existingUserOptional.get();
 
             if ((userFromDB.getRole()).equals(Role.ROLE_TEACHER)) {
-                teacherDAO.deleteTeacher(userFromDB.getTeacher().getId());
+                Optional<Teacher> teacherOptional = teacherDAO.getTeacherByUserId(userFromDB.getId());
+
+                if (teacherOptional.isEmpty()) {
+                    throw new IllegalArgumentException("Could not retrieve teacher record from user id " + userFromDB.getId());
+                }
+
+                teacherDAO.deleteTeacher(teacherOptional.get().getId());
             }
 
 
             if ((userFromDB.getRole()).equals(Role.ROLE_STUDENT)) {
-                studentDAO.deleteStudent(userFromDB.getStudent().getId());
+                Optional<Student> studentOptional = studentDAO.getStudentByUserId(userFromDB.getId());
+
+                if (studentOptional.isEmpty()) {
+                    throw new IllegalArgumentException("Could not retrieve student record from user id " + userFromDB.getId());
+                }
+
+                studentDAO.deleteStudent(studentOptional.get().getId());
             }
 
             entityManager.remove(userFromDB);
