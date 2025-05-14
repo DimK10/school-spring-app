@@ -1,5 +1,6 @@
 package gr.dimitriskaitantzidis.schoolspringapp.dto;
 
+import gr.dimitriskaitantzidis.schoolspringapp.enums.Record;
 import gr.dimitriskaitantzidis.schoolspringapp.model.Student;
 import gr.dimitriskaitantzidis.schoolspringapp.model.User;
 
@@ -15,17 +16,23 @@ public class StudentDTO implements BaseDTO<Student>, Serializable {
 
     private String name;
 
+    public StudentDTO(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     @Override
-    public Student toEntity() {
+    public Student toEntity(Record record) {
         Student student = new Student();
         student.setId(this.id);
         student.setName(this.name);
         return student;
     }
 
-    public Student toEntity(User user) {
-        Student student = this.toEntity();
+    public Student toEntity(Record record, User user) {
+        Student student = this.toEntity(record);
         student.setUser(user);
+        student.setName(user.getName());
         return student;
     }
 }

@@ -5,9 +5,11 @@ import gr.dimitriskaitantzidis.schoolspringapp.dao.IStudentDAO;
 import gr.dimitriskaitantzidis.schoolspringapp.dao.ITeacherDAO;
 import gr.dimitriskaitantzidis.schoolspringapp.dao.IUserDAO;
 import gr.dimitriskaitantzidis.schoolspringapp.dto.UserDTO;
+import gr.dimitriskaitantzidis.schoolspringapp.enums.Record;
 import gr.dimitriskaitantzidis.schoolspringapp.enums.Role;
 import gr.dimitriskaitantzidis.schoolspringapp.model.User;
 import gr.dimitriskaitantzidis.schoolspringapp.model.User_;
+import gr.dimitriskaitantzidis.schoolspringapp.util.PasswordHashGenerator;
 import jakarta.persistence.Query;
 import org.springframework.javapoet.ClassName;
 import org.springframework.stereotype.Repository;
@@ -61,7 +63,10 @@ public class UserDAOImpl extends GenericDAO<User, Integer> implements IUserDAO {
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public void saveUser(UserDTO userDTO) throws SQLException, IllegalArgumentException {
         try {
-            User newUser = userDTO.toEntity();
+            User newUser = userDTO.toEntity(Record.CREATE);
+
+
+            newUser.setPassword(PasswordHashGenerator.hashPassword(userDTO.getPassword()));
 
             entityManager.persist(newUser);
 
@@ -70,14 +75,14 @@ public class UserDAOImpl extends GenericDAO<User, Integer> implements IUserDAO {
                     throw new IllegalArgumentException("The teacherDTO in userDTO is null");
                 }
 
-                teacherDAO.saveTeacher(userDTO.getTeacherDTO().toEntity(newUser));
+                teacherDAO.saveTeacher(userDTO.getTeacherDTO().toEntity(Record.CREATE, newUser));
             }
 
             if (Role.valueOf(userDTO.getRole()).equals(Role.ROLE_STUDENT)) {
                 if (userDTO.getStudentDTO() == null) {
                     throw new IllegalArgumentException("The studentDTO in userDTO is null");
                 }
-                studentDAO.saveStudent(userDTO.getStudentDTO().toEntity(newUser));
+                studentDAO.saveStudent(userDTO.getStudentDTO().toEntity(Record.CREATE, newUser));
             }
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
@@ -100,7 +105,7 @@ public class UserDAOImpl extends GenericDAO<User, Integer> implements IUserDAO {
 
             User userFromDB = existingUserOptional.get();
 
-            User updatedUser = userDTO.toEntity();
+            User updatedUser = userDTO.toEntity(Record.UPDATE);
 
             userFromDB.setUserName(updatedUser.getUserName());
             userFromDB.setEmail(updatedUser.getEmail());
@@ -110,14 +115,14 @@ public class UserDAOImpl extends GenericDAO<User, Integer> implements IUserDAO {
                 if (userDTO.getTeacherDTO() == null) {
                     throw new IllegalArgumentException("The teacherDTO in userDTO is null");
                 }
-                teacherDAO.updateTeacher(userDTO.getTeacherDTO().toEntity(userFromDB));
+                teacherDAO.updateTeacher(userDTO.getTeacherDTO().toEntity(Record.UPDATE, userFromDB));
             }
 
             if (Role.valueOf(userDTO.getRole()).equals(Role.ROLE_STUDENT)) {
                 if (userDTO.getStudentDTO() == null) {
                     throw new IllegalArgumentException("The studentDTO in userDTO is null");
                 }
-                studentDAO.updateStudent(userDTO.getStudentDTO().toEntity(userFromDB));
+                studentDAO.updateStudent(userDTO.getStudentDTO().toEntity(Record.UPDATE, userFromDB));
             }
 
 

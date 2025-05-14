@@ -1,6 +1,6 @@
 CREATE TABLE `schoolapp`.`users`
 (
-    `id`        INT         NOT NULL,
+    `id` INT NOT NULL AUTO_INCREMENT,
     `user_name` VARCHAR(45) NOT NULL,
     `email`     VARCHAR(45) NOT NULL,
     `password` VARCHAR(100) NOT NULL,

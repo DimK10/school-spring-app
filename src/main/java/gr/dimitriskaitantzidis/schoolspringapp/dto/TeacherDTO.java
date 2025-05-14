@@ -1,5 +1,6 @@
 package gr.dimitriskaitantzidis.schoolspringapp.dto;
 
+import gr.dimitriskaitantzidis.schoolspringapp.enums.Record;
 import gr.dimitriskaitantzidis.schoolspringapp.model.Teacher;
 import gr.dimitriskaitantzidis.schoolspringapp.model.User;
 
@@ -25,7 +26,7 @@ public class TeacherDTO implements BaseDTO<Teacher>, Serializable {
 	}
 
 	@Override
-	public Teacher toEntity() {
+	public Teacher toEntity(Record record) {
 		Teacher teacher = new Teacher();
 		teacher.setId(id);
 		teacher.setFname(fname);
@@ -33,9 +34,11 @@ public class TeacherDTO implements BaseDTO<Teacher>, Serializable {
 		return teacher;
 	}
 
-	public Teacher toEntity(User user) {
-		Teacher teacher = this.toEntity();
+	public Teacher toEntity(Record record, User user) {
+		Teacher teacher = this.toEntity(record);
 		teacher.setUser(user);
+		teacher.setFname(user.getName().substring(0, 1));
+		teacher.setSname(user.getName().substring(1));
 		return teacher;
 	}
 

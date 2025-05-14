@@ -7,4 +7,8 @@ public class PasswordHashGenerator {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         System.out.println(encoder.encode("1234"));
     }
+
+    public static String hashPassword(String password) {
+        return new BCryptPasswordEncoder().encode(password);
+    }
 }

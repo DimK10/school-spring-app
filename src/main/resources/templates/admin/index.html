@@ -5,6 +5,39 @@
     <title>Administrator Page</title>
 </head>
 <body>
-<h1 th:text="'Administrator Page'">Administrator Page</h1>
+<div class="container-fluid">
+    <div class="row mb-1">
+        <h1 th:text="'Administrator Page'">List of users</h1>
+    </div>
+    <div class="row mb-3">
+        <div class="col-1">
+            <a th:href="@{/admin/create}" class="btn btn-primary" role="button">Create</a>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th style="width: 150px;">Id</th>
+                <th style="width: 150px;">Username</th>
+                <th style="width: 150px;">Email</th>
+                <th style="width: 150px;">Role</th>
+                <th style="width: 150px;">First Name - Last Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user?.userId}">userId</td>
+                <td th:text="${user?.username}">username</td>
+                <td th:text="${user?.email}">email</td>
+                <td th:text="${user?.roleLabel}">role</td>
+                <td th:text="${user?.name}">name</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
 </body>
 </html>

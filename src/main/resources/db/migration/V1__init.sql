@@ -5,7 +5,7 @@
 
 CREATE TABLE `teachers`
 (
-    `id` int NOT NULL,
+    `id` int NOT NULL AUTO_INCREMENT,
     `Firstname` varchar(45) NOT NULL,
     `Surname`   varchar(45) NOT NULL,
     `U_id` INT NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE `teachers`
 
 CREATE TABLE `students`
 (
-    `id` int NOT NULL,
+    `id` int NOT NULL AUTO_INCREMENT,
     `Name` varchar(10) NOT NULL,
     `U_id` INT NOT NULL,
 
@@ -24,7 +24,7 @@ CREATE TABLE `students`
 
 CREATE TABLE `administrators`
 (
-    `id`   INT         NOT NULL,
+    `id` INT NOT NULL AUTO_INCREMENT,
     `Name` varchar(10) NOT NULL,
     `U_id` INT         NOT NULL,
 
@@ -33,7 +33,7 @@ CREATE TABLE `administrators`
 
 CREATE TABLE `courses`
 (
-    `id` int NOT NULL,
+    `id` int NOT NULL AUTO_INCREMENT,
     `Title` varchar(50) NOT NULL,
     PRIMARY KEY (`id`)
 );

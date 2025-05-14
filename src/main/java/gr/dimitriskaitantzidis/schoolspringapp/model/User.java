@@ -8,8 +8,8 @@ import jakarta.persistence.*;
 @Entity
 @NamedNativeQueries({
         @NamedNativeQuery(name = "User.getAllUsersOrderByNameNative"
-                , query = "select u.id, " +
-                "       u.user_name userName, " +
+                , query = "select u.id userId, " +
+                "       u.user_name username, " +
                 "       u.email, " +
                 "       u.role, " +
                 "       case role " +
@@ -25,8 +25,8 @@ import jakarta.persistence.*;
                 @ConstructorResult(
                         targetClass = UserDTO.class
                         , columns = {
-                        @ColumnResult(name = "id", type = Integer.class)
-                        , @ColumnResult(name = "userName", type = String.class)
+                        @ColumnResult(name = "userId", type = Integer.class)
+                        , @ColumnResult(name = "username", type = String.class)
                         , @ColumnResult(name = "email", type = String.class)
                         , @ColumnResult(name = "role", type = String.class)
                         , @ColumnResult(name = "name", type = String.class)
@@ -51,6 +51,9 @@ public class User extends BaseEntity {
     @Basic(optional = false)
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @Transient
+    private String name;
 
 
     @Transient // Will not be used with connection to db
@@ -107,5 +110,13 @@ public class User extends BaseEntity {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

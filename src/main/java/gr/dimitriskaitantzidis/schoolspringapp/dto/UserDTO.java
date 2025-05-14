@@ -2,9 +2,8 @@ package gr.dimitriskaitantzidis.schoolspringapp.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import gr.dimitriskaitantzidis.schoolspringapp.enums.Record;
 import gr.dimitriskaitantzidis.schoolspringapp.enums.Role;
-import gr.dimitriskaitantzidis.schoolspringapp.model.Student;
-import gr.dimitriskaitantzidis.schoolspringapp.model.Teacher;
 import gr.dimitriskaitantzidis.schoolspringapp.model.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -31,6 +30,10 @@ public class UserDTO implements BaseDTO<User>, Serializable {
     @Email
     @JsonProperty
     private String email;
+
+    @NotBlank
+    @JsonProperty
+    private String password;
 
     @NotBlank // TODO add custom validation with custom annotation @ValidRole
     @JsonProperty
@@ -85,6 +88,10 @@ public class UserDTO implements BaseDTO<User>, Serializable {
         return role;
     }
 
+    public String getRoleLabel() {
+        return Role.valueOf(role).getAbbreviated();
+    }
+
     public void setRole(String role) {
         this.role = role;
     }
@@ -105,21 +112,30 @@ public class UserDTO implements BaseDTO<User>, Serializable {
         this.studentDTO = studentDTO;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
-    public User toEntity() {
+    public User toEntity(Record record) {
         User user = new User();
-        user.setId(userId);
+        user.setId(record.equals(Record.CREATE) ? null : userId);
         user.setUserName(username);
         user.setEmail(email);
+        user.setName(name);
 
         Role userRole = Role.valueOf(role);
         user.setRole(userRole);
 
-        Teacher teacher = this.teacherDTO.toEntity();
-        user.setTeacher(teacher);
-
-        Student student = this.studentDTO.toEntity();
-        user.setStudent(student);
+//        Teacher teacher = this.teacherDTO.toEntity();
+//        user.setTeacher(teacher);
+//
+//        Student student = this.studentDTO.toEntity();
+//        user.setStudent(student);
 
         return user;
     }
